@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/tls"
 	"flag"
+	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"log"
 	"net"
@@ -14,20 +15,21 @@ import (
 
 func main() {
 	var (
-		enableTls   bool
-		enableProxy bool
-		listenAddr  string
-		tlsCertPath string
-		tlsKeyPath  string
-		idaKeyPath  string
-		ln          net.Listener
+		enableTls      bool
+		enableProxy    bool
+		listenAddr     string
+		tlsCertPath    string
+		tlsKeyPath     string
+		serverListPath string
+		ln             net.Listener
 	)
 	flag.BoolVar(&enableTls, "tls", false, "enable TLS")
 	flag.BoolVar(&enableProxy, "proxy", false, "enable PROXY protocol support")
 	flag.StringVar(&listenAddr, "listen", ":8000", "listen address")
 	flag.StringVar(&tlsCertPath, "tlsCert", "cert.pem", "path to TLS certificate (PEM format)")
 	flag.StringVar(&tlsKeyPath, "tlsKey", "key.pem", "path to TLS certificate key (PEM format)")
-	flag.StringVar(&idaKeyPath, "idaKey", "ida.key", "path to ida.key")
+
+	flag.StringVar(&serverListPath, "serverlist", "server.yaml", "path to list of server.yaml")
 	flag.Parse()
 
 	tcpListener, err := net.Listen("tcp", listenAddr)
@@ -55,19 +57,48 @@ func main() {
 		ln = proxyListener
 	}
 
-	f, err := os.Open(idaKeyPath)
+	f, err := os.Open(serverListPath)
 	if err != nil {
-		log.Fatal("unable to open ida.key: ", err)
+		log.Fatal("unable to open server.yaml: ", err)
 	}
 	data, err := ioutil.ReadAll(f)
 	if err != nil {
-		log.Fatal("unable to read license: ", err)
+		log.Fatal("unable to read server.yaml: ", err)
 	}
-	licKey := lumina.LicenseKey(data)
-	idaInfo := licKey.GetIDAInfo()
-	licOS = idaInfo.OS
-	licID := idaInfo.Id
-	proxy := NewProxy(licKey, licID)
+
+	type ServerEntry struct {
+		Name string
+		Addr string
+		Cert string
+
+		Key string
+	}
+	servers := make([]ServerEntry, 0)
+	err = yaml.Unmarshal(data, &servers)
+	if err != nil {
+		log.Fatal("unable to parse server.yaml: ", err)
+	}
+	clients := make([]*lumina.Client, 0)
+	for _, serverEntry := range servers {
+		licKey := lumina.LicenseKey(serverEntry.Key)
+		idaInfo := licKey.GetIDAInfo()
+		licId := idaInfo.Id
+		var dialer lumina.Dialer
+		if serverEntry.Cert == "" {
+			dialer = &lumina.TCPDialer{
+				Addr: serverEntry.Addr,
+			}
+		} else {
+			dialer = lumina.NewTLSDialer(serverEntry.Addr, serverEntry.Cert)
+		}
+		clients = append(clients, &lumina.Client{
+			LicenseKey: licKey,
+			LicenseId:  licId,
+			Dialer:     dialer,
+		})
+	}
+
+	proxy := NewProxyEx(clients)
 
 	log.Print("proxy is listening on ", ln.Addr())
 	log.Fatal("proxy stopped serving with error: ", proxy.Serve(ln))

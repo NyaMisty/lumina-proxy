@@ -1,0 +1,149 @@
+# server1
+- name: HexRays
+  key: |
+    HEXRAYS_LICENSE 8.0
+
+    USER            xxxx
+    EMAIL           xxxx@yyyy.com
+    ISSUED_ON       2006-01-02 15:04:05
+
+
+      LICENSE_ID    PRODUCT    #  SUPPORT    EXPIRES        DESCRIPTION
+    --------------- --------- -- ---------- ---------  -----------------------------
+    48-0000-0000-00 IDAPRONW  12 2038-01-01 Never      IDA Professional (Windows)
+    48-0000-0000-00 IDAPRONL  12 2038-01-01 Never      IDA Professional (Linux)
+    48-0000-0000-00 IDAPRONM  12 2038-01-01 Never      IDA Professional (Mac)
+    50-0000-0000-00 HEXMIPSW  12 2038-01-01 Never      MIPS Decompiler (Windows)
+    50-0000-0000-00 HEXMIPSL  12 2038-01-01 Never      MIPS Decompiler (Linux)
+    50-0000-0000-00 HEXMIPSM  12 2038-01-01 Never      MIPS Decompiler (Mac)
+    51-0000-0000-00 HEXPPC64W 12 2038-01-01 Never      PPC64 Decompiler (Windows)
+    51-0000-0000-00 HEXPPC64L 12 2038-01-01 Never      PPC64 Decompiler (Linux)
+    51-0000-0000-00 HEXPPC64M 12 2038-01-01 Never      PPC64 Decompiler (Mac)
+    53-0000-0000-00 HEXPPCW   12 2038-01-01 Never      PPC Decompiler (Windows)
+    53-0000-0000-00 HEXPPCL   12 2038-01-01 Never      PPC Decompiler (Linux)
+    53-0000-0000-00 HEXPPCM   12 2038-01-01 Never      PPC Decompiler (Mac)
+    54-0000-0000-00 HEXARM64W 12 2038-01-01 Never      ARM64 Decompiler (Windows)
+    54-0000-0000-00 HEXARM64L 12 2038-01-01 Never      ARM64 Decompiler (Linux)
+    54-0000-0000-00 HEXARM64M 12 2038-01-01 Never      ARM64 Decompiler (Mac)
+    55-0000-0000-00 HEXX64W   12 2038-01-01 Never      x64 Decompiler (Windows)
+    55-0000-0000-00 HEXX64L   12 2038-01-01 Never      x64 Decompiler (Linux)
+    55-0000-0000-00 HEXX64M   12 2038-01-01 Never      x64 Decompiler (Mac)
+    56-0000-0000-00 HEXARMW   12 2038-01-01 Never      ARM Decompiler (Windows)
+    56-0000-0000-00 HEXARML   12 2038-01-01 Never      ARM Decompiler (Linux)
+    56-0000-0000-00 HEXARMM   12 2038-01-01 Never      ARM Decompiler (Mac)
+    57-0000-0000-00 HEXX86W   12 2038-01-01 Never      x86 Decompiler (Windows)
+    57-0000-0000-00 HEXX86L   12 2038-01-01 Never      x86 Decompiler (Linux)
+    57-0000-0000-00 HEXX86M   12 2038-01-01 Never      x86 Decompiler (Mac)
+
+    R:MA==
+    S:MA==
+
+  addr: lumina.hex-rays.com:443
+  cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIF0TCCA7mgAwIBAgIULzKtEOP9Q7V/L/G4Rnv4L3vq/hEwDQYJKoZIhvcNAQEN
+    BQAwVDELMAkGA1UEBhMCQkUxDzANBgNVBAcMBkxpw6hnZTEVMBMGA1UECgwMSGV4
+    LVJheXMgU0EuMR0wGwYDVQQDDBRIZXgtUmF5cyBTQS4gUm9vdCBDQTAeFw0yMDA1
+    MDQxMTAyMDhaFw00MDA0MjkxMTAyMDhaMFQxCzAJBgNVBAYTAkJFMQ8wDQYDVQQH
+    DAZMacOoZ2UxFTATBgNVBAoMDEhleC1SYXlzIFNBLjEdMBsGA1UEAwwUSGV4LVJh
+    eXMgU0EuIFJvb3QgQ0EwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQDB
+    rsEh48VNyjCPROSYzw5viAcfDuBoDAHe3bIRYMaGm2a6omSXSzT02RAipSlO6nJZ
+    /PgNEipaXYLbEXmrrGdnSdBu8ub51t17AdGcGYzzPjSIpIVH5mX2iObHdS3gyNzp
+    JKJQUCDM6FdJa8ZcztKw+bXsN1ftKaZCzHcuUBc8P5lkiRGcuYfbiHri5C02pGo1
+    3y4Oz99Sot8KUfwNhByOOGOweYyfn9NgmhqhkBu27+6rxpmuR7mHyOhfnLs+psQ0
+    yjE6bzul2ilWFrOSaLAxKbhBLLQDWCYeBvXmE0IzmZVbo2DqTU+NWREU6avmRRBz
+    6RnZHFUhl2LVbJ5Ar45BawR38bRNro6VNCTq89rBXVFeCnk9Ja6v4ZAoWmjJupHC
+    pXTIxoebkoeWAwICuz63cWsRh1y2aqdgQ6v9yVErA64GhgCkpJO82HDtA9Siqge3
+    T+rgUnj1pcllGKgxAFYcKhlCLl4+bm0ohlxF0WF8VMhG/TBLNH3MlJFjlMoBwQnl
+    APheEgZWoQSEjAkzRLUrRw7kVk/Qt8G5hFGLb3UjE8SKDPKRYSBAUN/uP8YHKFqo
+    2arpTCi1DO4SqX8r6zqzslVTf6uWTiq8MNkZ/+7NYr1/JPT25iMlw6sa6g4GUPpQ
+    zhRaPy19obGe43u4vjpyse9g5vqX9p3u9MI14x3k6QIDAQABo4GaMIGXMB0GA1Ud
+    DgQWBBQaxNacfM7XKjKIutIHrc6tjiE9DTAfBgNVHSMEGDAWgBQaxNacfM7XKjKI
+    utIHrc6tjiE9DTAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBhjA0BgNV
+    HR8ELTArMCmgJ6AlhiNodHRwOi8vY3JsLmhleC1yYXlzLmNvbS9yb290X2NhLmNy
+    bDANBgkqhkiG9w0BAQ0FAAOCAgEAdKp4InpRk5z0BjPs6CcJSgKbCH0MXZqbt/EM
+    /4dJPvmA6tAexJpv9e9BmT/DOB84QB2xzQlEiNOB7/V4j3oDij5mMwRyqYL24l3g
+    HAavwc+dLrpzX/54uZmH9bKs7yj3fk/vU3e7th720ArL2/YZjHV2Wx0BMcs+YVit
+    phvG2mxu16DTpidms3pCj25eEISJvXfe8XEfKOP1FxGCpmKxx6qPHlNASOp5zdwV
+    iEimkguUwzCsmmPI5rEWLXdLRxc0CkffmbsNmsF8SZz38CiwuRlichDDdZuJXji7
+    jnZF7h04Mo2AKPt6wJ9+66rYqDigvP9sHGKpQp5hr1DMukFGnei3S9h5Kp8eDhRX
+    Y24y/CJVNO0rxYoFPUnOwbSUF3Fwu4fX3Ezq5eW7N0Nl7s0XHExb/P9fmhPxQBV1
+    gwr665inq5ZwD8H9uwGEVp3IBT9cHRu8ieZrQDMI1UqPOy+2EWNPtY4KxmgerTbc
+    N0VH4BuE8tdxTGUckg4JTbsNRUbqxSXmSL9jA1dLBT63lbMLIU06dIdqNbpxE4GV
+    MgOLwqwx/BF+FZgQTttdjmpexml6NIDVGDBxfyECJ5vdwxbKMIRfo7fp0jRpjZpP
+    8bw4BPnx0Y4NpMzKxiWS0i7re9iEafdh6GtpNynKU0JFSKrIwmIecKF+Z4ZUE/1K
+    +t/FOgI=
+    -----END CERTIFICATE-----
+
+# server2
+- name: Lumen
+  key: |
+    HEXRAYS_LICENSE 8.0
+
+    USER            xxxx
+    EMAIL           xxxx@yyyy.com
+    ISSUED_ON       2006-01-02 15:04:05
+
+
+      LICENSE_ID    PRODUCT    #  SUPPORT    EXPIRES        DESCRIPTION
+    --------------- --------- -- ---------- ---------  -----------------------------
+    48-0000-0000-00 IDAPRONW  12 2038-01-01 Never      IDA Professional (Windows)
+    48-0000-0000-00 IDAPRONL  12 2038-01-01 Never      IDA Professional (Linux)
+    48-0000-0000-00 IDAPRONM  12 2038-01-01 Never      IDA Professional (Mac)
+    50-0000-0000-00 HEXMIPSW  12 2038-01-01 Never      MIPS Decompiler (Windows)
+    50-0000-0000-00 HEXMIPSL  12 2038-01-01 Never      MIPS Decompiler (Linux)
+    50-0000-0000-00 HEXMIPSM  12 2038-01-01 Never      MIPS Decompiler (Mac)
+    51-0000-0000-00 HEXPPC64W 12 2038-01-01 Never      PPC64 Decompiler (Windows)
+    51-0000-0000-00 HEXPPC64L 12 2038-01-01 Never      PPC64 Decompiler (Linux)
+    51-0000-0000-00 HEXPPC64M 12 2038-01-01 Never      PPC64 Decompiler (Mac)
+    53-0000-0000-00 HEXPPCW   12 2038-01-01 Never      PPC Decompiler (Windows)
+    53-0000-0000-00 HEXPPCL   12 2038-01-01 Never      PPC Decompiler (Linux)
+    53-0000-0000-00 HEXPPCM   12 2038-01-01 Never      PPC Decompiler (Mac)
+    54-0000-0000-00 HEXARM64W 12 2038-01-01 Never      ARM64 Decompiler (Windows)
+    54-0000-0000-00 HEXARM64L 12 2038-01-01 Never      ARM64 Decompiler (Linux)
+    54-0000-0000-00 HEXARM64M 12 2038-01-01 Never      ARM64 Decompiler (Mac)
+    55-0000-0000-00 HEXX64W   12 2038-01-01 Never      x64 Decompiler (Windows)
+    55-0000-0000-00 HEXX64L   12 2038-01-01 Never      x64 Decompiler (Linux)
+    55-0000-0000-00 HEXX64M   12 2038-01-01 Never      x64 Decompiler (Mac)
+    56-0000-0000-00 HEXARMW   12 2038-01-01 Never      ARM Decompiler (Windows)
+    56-0000-0000-00 HEXARML   12 2038-01-01 Never      ARM Decompiler (Linux)
+    56-0000-0000-00 HEXARMM   12 2038-01-01 Never      ARM Decompiler (Mac)
+    57-0000-0000-00 HEXX86W   12 2038-01-01 Never      x86 Decompiler (Windows)
+    57-0000-0000-00 HEXX86L   12 2038-01-01 Never      x86 Decompiler (Linux)
+    57-0000-0000-00 HEXX86M   12 2038-01-01 Never      x86 Decompiler (Mac)
+
+    R:MA==
+    S:MA==
+
+  addr: lumen.abda.nl:1235
+  cert: |
+    -----BEGIN CERTIFICATE-----
+    MIIFKTCCAxGgAwIBAgIUaXvTqylZU0MtgxdEzc2HwICBwwkwDQYJKoZIhvcNAQEL
+    BQAwNjELMAkGA1UEBhMCSUwxDzANBgNVBAgMBklzcmFlbDEWMBQGA1UEAwwNbHVt
+    ZW4uYWJkYS5ubDAeFw0yMTA5MjAxNDM3MTFaFw0yNjA5MTkxNDM3MTFaMDYxCzAJ
+    BgNVBAYTAklMMQ8wDQYDVQQIDAZJc3JhZWwxFjAUBgNVBAMMDWx1bWVuLmFiZGEu
+    bmwwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQCwmW6S2OlzHUw+WWCu
+    0/O+67NPUPKt7u94f+DtKKiK6IJ0pusVHi1f5bnBLMkav3Ht1BOBVBTf5gmVKlFu
+    jX4oZB9210kchnN9JfVZ0DdfBIGAlcToMlvyO8G8MmqG1jlTpokbLqW0AIZAGIMK
+    DQHa6ah5Wc9UiXBs+zNvk+4aCs4UGH4vTLOZLAmp1UGy3e5sWm5CAHvV8pKshbHQ
+    /8vfutLBDtY6GDn/54MLxzhjePpEWPi2DtriOh0SYNgemtiEMbfgSJ2Gt4Gw2mGM
+    LZnORvA83CeRXWs24eBB3fdk3YiU2jWe/BPmfRYs4Z0/291yv3rTct54fxaczqsV
+    hEY6LorClSFICm8XJK1S/pwPMCtl/rXP53EbV6SZIZhTcGk1LLi19u52CNRZJmNH
+    QB3kDaF+kZAHHz0D/crTiSG8ZC22b2zbAyUHYg22UjDIOhSRRF8q6AhdIgPgwZAU
+    n565sF+PXvijUFWewKawN31vJR0Man7liqIZmDDbt7LkoQdpBTN2PKtxd25dw/j/
+    +mIqzeLNbCtlV0HRk+mr9nJFONerK3jbJ9dfE78e7WofhvZ7MidQzDAK84h3c5Bw
+    NOBFSaEYBcnx6YwUBMpp28E4k8tD3x5GWfMqsfEf5ELeGIeHFGZjQzezFptJS7oU
+    Lo/A9pzS//3dTZ4OIIn+fQFfxwIDAQABoy8wLTAJBgNVHRMEAjAAMAsGA1UdDwQE
+    AwIF4DATBgNVHSUEDDAKBggrBgEFBQcDATANBgkqhkiG9w0BAQsFAAOCAgEAmwex
+    dCDpakLUaU1/BzXr3zQnnC4cLjolHGL1EQAK3i5De8dBS7y0sL7YieXPvQsa6Wg8
+    /v0vPBK9I9M08bMwp1Tbs4fRpB9lkqbFMaw8w62YF6m5D2lPSu9o8UsEDQd23ABL
+    xONcIeGQ7IX4KcRv7lSE7AbHjVyG4zEc6aIeSiLpQ3/LAYY1cvsAL0EWxISxNQ9T
+    gnj/tvw6X5LYBP2j7jbAuLPUneQ152rZLncJ4M6hYvh/L9DySSMTFYu5FqLQCjcm
+    +9gSdeZ07GaFdh4sNy1BNH104SmQr2tkhyjkOHq6/YYCvsMQN1OQ4EBDIGWRCO9m
+    BO8fm5SeKIX2VA3DJUOAgJc+GRmg9nRiqIZPslkDUlv+WXVYNMPFQfpP4lqQEbJq
+    SIOGbh+hvZ12q8jNu+UGj0nQRJ26fX9x52wxotevEJSuaskBh8naL/K4Hh1ReKYY
+    z40NiMf4ta2PQdnZbg644TuJj23aBdSxR+hQ69Gj5sVZTTs4A3+AQelWDnMm8aYz
+    LRJjWCpJ1RHwO+pJiqAQP5R1qUuwTdLNb1Dh+yI3bhL3rVRBaGI7Yp0A265rXluy
+    O3WQzFbKJ0msyZlQ6mR7O78qX9EQ0UatorndkjUmt8zk+JppRsGJsS7jdgFAwssU
+    8QkUCX89h2xC2pbeXyi/mvlxEcfmNSaOKaLCoNo=
+    -----END CERTIFICATE-----

@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/palantir/stacktrace"
+
 	"github.com/zhangyoufu/lumina"
 )
 
@@ -20,18 +20,20 @@ func NewProxy(licKey lumina.LicenseKey, licId lumina.LicenseId) (proxy *Proxy) {
 		LicenseKey: licKey,
 		LicenseId:  licId,
 	}
+	return NewProxyEx([]*lumina.Client{client})
+}
+
+func NewProxyEx(clients []*lumina.Client) (proxy *Proxy) {
 	handler := &proxyHandler{}
 	proxy = &Proxy{}
 	proxy.Handler = handler
 	proxy.OnHELO = func(ctx context.Context) (newctx context.Context, err error) {
-		session, err := client.Dial(ctx, lumina.GetLogger(ctx), handler)
+		//session, err := clients[0].Dial(ctx, lumina.GetLogger(ctx), handler)
+		sessions, err := DialClients(clients, ctx, lumina.GetLogger(ctx), handler)
 		if err != nil {
-			if err != context.Canceled {
-				err = stacktrace.Propagate(err, "unable to create upstream session")
-			}
 			return
 		}
-		newctx = setUpstream(ctx, session)
+		newctx = setUpstream(ctx, sessions)
 		return
 	}
 	return
@@ -73,11 +75,56 @@ func (*proxyHandler) GetPacketOfType(t lumina.PacketType) lumina.Packet {
 }
 
 // Pump between client and upstream server. (half-duplex)
-func (*proxyHandler) ServeRequest(ctx context.Context, req lumina.Request) (rsp lumina.Packet, err error) {
+func (*proxyHandler) ServeRequest(ctx context.Context, req lumina.Request) (finalRsp lumina.Packet, err error) {
 	if pkt, ok := req.(*lumina.PushMdPacket); ok {
 		pkt.AnonymizeFields(ctx)
 	}
-	rsp, err = getUpstream(ctx).Request(ctx, req)
+	rsps, _err := getUpstream(ctx).Request(ctx, req)
+	if _err != nil {
+		err = _err
+		return
+	}
+
+	switch rsps[0].(type) {
+	case *lumina.PullMdResultPacket:
+		firstRsp := rsps[0].(*lumina.PullMdResultPacket)
+		rsp := &lumina.PullMdResultPacket{}
+		rsp.Codes = make([]lumina.OpResult, len(firstRsp.Codes))
+		rsp.Results = make([]lumina.FuncInfoAndFrequency, 0)
+		for i, _ := range rsp.Codes {
+			rsp.Codes[i] = lumina.PDRES_ERROR
+		}
+		for _, curRspRaw := range rsps {
+			if curRsp, ok := curRspRaw.(*lumina.PullMdResultPacket); ok {
+				for i, code := range curRsp.Codes {
+					if rsp.Codes[i] == lumina.PDRES_OK {
+						continue
+					}
+					rsp.Codes[i] = code
+				}
+				rsp.Results = append(rsp.Results, curRsp.Results...)
+			}
+		}
+		finalRsp = rsp
+	case *lumina.PushMdResultPacket:
+		firstRsp := rsps[0].(*lumina.PushMdResultPacket)
+		rsp := &lumina.PushMdResultPacket{}
+		rsp.Codes = make([]lumina.OpResult, len(firstRsp.Codes))
+		for i, _ := range rsp.Codes {
+			rsp.Codes[i] = lumina.PDRES_ERROR
+		}
+		for _, curRspRaw := range rsps {
+			if curRsp, ok := curRspRaw.(*lumina.PullMdResultPacket); ok {
+				for i, code := range curRsp.Codes {
+					if rsp.Codes[i] == lumina.PDRES_OK {
+						continue
+					}
+					rsp.Codes[i] = code
+				}
+			}
+		}
+		finalRsp = rsp
+	}
 	// if err != nil {
 	//     lumina.GetConn(ctx).Close()
 	// }
