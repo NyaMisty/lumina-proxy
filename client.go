@@ -1,11 +1,4 @@
-// +build go1.13
-
 package lumina
-
-import (
-	"crypto/tls"
-	"crypto/x509"
-)
 
 // Clients can be reused instead of created as needed. Clients are safe for
 // concurrent use by multiple goroutines.
@@ -66,15 +59,5 @@ MgOLwqwx/BF+FZgQTttdjmpexml6NIDVGDBxfyECJ5vdwxbKMIRfo7fp0jRpjZpP
 var defaultDialer Dialer
 
 func init() {
-	roots := x509.NewCertPool()
-	if ok := roots.AppendCertsFromPEM([]byte(hexRaysCert)); !ok {
-		panic("unable to parse Hex-Rays cert")
-	}
-
-	d := &TLSDialer{}
-	d.Addr = hexRaysAddr
-	d.RootCAs = roots
-	d.MinVersion = tls.VersionTLS13
-
-	defaultDialer = d
+	defaultDialer = NewTLSDialer(hexRaysAddr, hexRaysCert)
 }

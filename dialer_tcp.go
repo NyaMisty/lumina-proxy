@@ -19,3 +19,7 @@ type hideDialContext struct {
 func (d *TCPDialer) Dial() (net.Conn, error) {
 	return d.Dialer.Dial("tcp", d.Addr)
 }
+
+func (d *TCPDialer) Info() string {
+	return "Lumina-TCP-" + d.Addr
+}
