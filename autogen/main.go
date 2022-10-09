@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"github.com/fatih/structtag"
 	"go/ast"
 	"go/token"
 	"go/types"
@@ -153,10 +154,16 @@ func (ctx *Context) resolveType(t types.Type) (typeName string, realType types.T
 	return
 }
 
-func (ctx *Context) Process(varName string, varType types.Type) {
+func (ctx *Context) Process(varName string, varType types.Type, varConstraint string) {
 	ctx.depth++
+
 	ctx.both("// Field " + varName)
 	varTypeName, varRealType := ctx.resolveType(varType)
+
+	if varConstraint != "" {
+		ctx.both("if " + varConstraint + " {")
+		ctx.depth++
+	}
 	switch varRealType.(type) {
 	case *types.Basic:
 		basicType := varRealType.(*types.Basic)
@@ -237,7 +244,7 @@ func (ctx *Context) Process(varName string, varType types.Type) {
 			ctx.write("if err = writeBytes(w, " + varName + "[:]); err != nil {\n\treturn\n}")
 		} else {
 			ctx.both("for i := uint32(0); i < " + length + "; i++ {")
-			ctx.Process(varName+"[i]", elemType)
+			ctx.Process(varName+"[i]", elemType, "")
 			ctx.both("}")
 		}
 	case *types.Slice:
@@ -260,11 +267,15 @@ func (ctx *Context) Process(varName string, varType types.Type) {
 			ctx.write("if err = writeBytes(w, " + varName + "); err != nil {\n\treturn\n}")
 		} else {
 			ctx.both("for i := uint32(0); i < " + tmp + "; i++ {")
-			ctx.Process(varName+"[i]", elemType)
+			ctx.Process(varName+"[i]", elemType, "")
 			ctx.both("}")
 		}
 	default:
 		log.Fatalf("unknown type %#v", varRealType)
+	}
+	if varConstraint != "" {
+		ctx.depth--
+		ctx.both("}")
 	}
 	ctx.depth--
 }
@@ -399,7 +410,17 @@ func (*`+structName+`) getResponseType() PacketType {
 					if !field.Exported() {
 						continue
 					}
-					ctx.Process("this."+field.Name(), field.Type())
+					hasConstraint := false
+					if tags, tagerr := structtag.Parse(structType.Tag(i)); tagerr == nil {
+						if constraintTag, tagerr := tags.Get("constraint"); tagerr == nil {
+							hasConstraint = true
+							ctx.Process("this."+field.Name(), field.Type(), constraintTag.Value())
+						} else {
+						}
+					}
+					if !hasConstraint {
+						ctx.Process("this."+field.Name(), field.Type(), "")
+					}
 				}
 
 				writeFile(output, `
