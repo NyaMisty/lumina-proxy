@@ -10,11 +10,13 @@ type HeloPacket struct {
 	ClientVersion int32 // int
 	Key           LicenseKey
 	LicenseId     LicenseId
-	RecordConv    bool // unknown meaning
+	RecordConv    bool   // unknown meaning
+	Username      string `constraint:"this.ClientVersion >= 3"`
+	Password      string `constraint:"this.ClientVersion >= 3"`
 }
 
 func (pkt *HeloPacket) validateFields() error {
-	if pkt.ClientVersion != 2 {
+	if pkt.ClientVersion > 3 {
 		return stacktrace.NewError("HeloPacket.ClientVersion=%v is unexpected",
 			pkt.ClientVersion,
 		)

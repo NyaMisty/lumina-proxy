@@ -36,6 +36,20 @@ func (this *HeloPacket) readFrom(r Reader) (err error) {
 	if this.RecordConv, err = readBool(r); err != nil {
 		return
 	}
+	// Field this.Username
+	if this.ClientVersion >= 3 {
+		// Basic string
+		if this.Username, err = readString(r); err != nil {
+			return
+		}
+	}
+	// Field this.Password
+	if this.ClientVersion >= 3 {
+		// Basic string
+		if this.Password, err = readString(r); err != nil {
+			return
+		}
+	}
 	return
 }
 
@@ -67,6 +81,20 @@ func (this *HeloPacket) writeTo(w Writer) (err error) {
 	// Basic bool
 	if err = writeBool(w, this.RecordConv); err != nil {
 		return
+	}
+	// Field this.Username
+	if this.ClientVersion >= 3 {
+		// Basic string
+		if err = writeString(w, this.Username); err != nil {
+			return
+		}
+	}
+	// Field this.Password
+	if this.ClientVersion >= 3 {
+		// Basic string
+		if err = writeString(w, this.Password); err != nil {
+			return
+		}
 	}
 	return
 }
