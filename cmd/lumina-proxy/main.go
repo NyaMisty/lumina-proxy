@@ -89,7 +89,11 @@ func main() {
 				Addr: serverEntry.Addr,
 			}
 		} else {
-			dialer = lumina.NewTLSDialer(serverEntry.Addr, serverEntry.Cert)
+			if serverEntry.Cert == "insecure" {
+				dialer = lumina.NewTLSDialer(serverEntry.Addr, "")
+			} else {
+				dialer = lumina.NewTLSDialer(serverEntry.Addr, serverEntry.Cert)
+			}
 		}
 		clients = append(clients, &lumina.Client{
 			LicenseKey: licKey,

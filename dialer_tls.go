@@ -24,14 +24,19 @@ func (d *TLSDialer) Info() string {
 }
 
 func NewTLSDialer(serverAddr string, cert string) Dialer {
-	roots := x509.NewCertPool()
-	if ok := roots.AppendCertsFromPEM([]byte(cert)); !ok {
-		panic("unable to parse Hex-Rays cert")
-	}
 	d := &TLSDialer{}
 	d.Addr = serverAddr
-	d.RootCAs = roots
 	d.MinVersion = tls.VersionTLS13
+
+	if cert == "" { // disable cert verify
+		d.InsecureSkipVerify = true
+	} else {
+		roots := x509.NewCertPool()
+		if ok := roots.AppendCertsFromPEM([]byte(cert)); !ok {
+			panic("unable to parse Hex-Rays cert")
+		}
+		d.RootCAs = roots
+	}
 
 	return d
 }
