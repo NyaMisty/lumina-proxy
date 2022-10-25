@@ -36,6 +36,10 @@ func (c *Client) Dial(ctx context.Context, logger *log.Logger, version int32, in
 		interpreter: interpreter,
 	}
 
+	if c.MaxVersion != 0 && c.MaxVersion < version {
+		version = c.MaxVersion
+	}
+
 	rsp, err := _s.Request(ctx, newHeloPacket(version, c.LicenseKey, c.LicenseId))
 	if err != nil {
 		err = stacktrace.Propagate(err, "hello request failed")

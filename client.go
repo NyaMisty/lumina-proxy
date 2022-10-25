@@ -8,6 +8,7 @@ type Client struct {
 	Dialer     Dialer
 	LicenseKey LicenseKey
 	LicenseId  LicenseId
+	MaxVersion int32
 }
 
 func (c *Client) getDialer() Dialer {

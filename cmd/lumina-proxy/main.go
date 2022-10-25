@@ -71,7 +71,8 @@ func main() {
 		Addr string
 		Cert string
 
-		Key string
+		MaxVer int32
+		Key    string
 	}
 	servers := make([]ServerEntry, 0)
 	err = yaml.Unmarshal(data, &servers)
@@ -98,6 +99,7 @@ func main() {
 		clients = append(clients, &lumina.Client{
 			LicenseKey: licKey,
 			LicenseId:  licId,
+			MaxVersion: serverEntry.MaxVer,
 			Dialer:     dialer,
 		})
 	}
