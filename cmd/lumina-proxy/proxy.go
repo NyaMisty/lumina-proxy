@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-
+	"github.com/palantir/stacktrace"
 	"github.com/zhangyoufu/lumina"
 )
 
@@ -28,9 +28,11 @@ func NewProxyEx(clients []*lumina.Client) (proxy *Proxy) {
 	proxy = &Proxy{}
 	proxy.Handler = handler
 	proxy.OnHELO = func(ctx context.Context) (newctx context.Context, err error) {
-		//session, err := clients[0].Dial(ctx, lumina.GetLogger(ctx), handler)
-		sessions, err := DialClients(clients, ctx, lumina.GetLogger(ctx), handler)
+		sessions, err := DialClients(clients, ctx, lumina.GetLogger(ctx), lumina.GetProtocolVersion(ctx), handler)
 		if err != nil {
+			if err != context.Canceled {
+				err = stacktrace.Propagate(err, "unable to create upstream session")
+			}
 			return
 		}
 		newctx = setUpstream(ctx, sessions)

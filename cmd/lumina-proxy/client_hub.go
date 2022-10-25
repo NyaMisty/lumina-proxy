@@ -14,11 +14,11 @@ type ClientSessionHub struct {
 	Sessions []*lumina.ClientSession
 }
 
-func DialClients(clients []*lumina.Client, ctx context.Context, logger *log.Logger, interpreter lumina.Interpreter) (ret *ClientSessionHub, err error) {
+func DialClients(clients []*lumina.Client, ctx context.Context, logger *log.Logger, version int32, interpreter lumina.Interpreter) (ret *ClientSessionHub, err error) {
 	ret = &ClientSessionHub{}
 	ret.Sessions = make([]*lumina.ClientSession, len(clients))
 	for i, client := range clients {
-		sess, _err := client.Dial(ctx, logger, interpreter)
+		sess, _err := client.Dial(ctx, logger, version, interpreter)
 		if _err != nil {
 			if _err != context.Canceled {
 				err = stacktrace.Propagate(_err, "unable to create upstream session for "+client.Dialer.Info())

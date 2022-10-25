@@ -1,3 +1,5 @@
+// +build go1.13
+
 package lumina
 
 // Clients can be reused instead of created as needed. Clients are safe for
