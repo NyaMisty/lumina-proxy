@@ -26,7 +26,7 @@ func (d *TLSDialer) Info() string {
 func NewTLSDialer(serverAddr string, cert string) Dialer {
 	d := &TLSDialer{}
 	d.Addr = serverAddr
-	d.MinVersion = tls.VersionTLS13
+	//d.MinVersion = tls.VersionTLS13
 
 	if cert == "" { // disable cert verify
 		d.InsecureSkipVerify = true
