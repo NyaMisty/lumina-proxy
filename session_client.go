@@ -25,10 +25,7 @@ func (c *Client) Dial(ctx context.Context, logger *log.Logger, version int32, in
 		return
 	}
 
-	if logger == nil {
-		dialerInfo := c.getDialer().Info()
-		logger = newTaggedLogger(dialerInfo)
-	}
+	logger = addLoggerTag(logger, c.getDialer().Info())
 
 	_s := &ClientSession{
 		conn:        conn,
