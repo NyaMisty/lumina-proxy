@@ -83,8 +83,11 @@ func (*proxyHandler) ServeRequest(ctx context.Context, req lumina.Request) (fina
 	}
 	rsps, _err := getUpstream(ctx).Request(ctx, req)
 	if _err != nil {
-		err = _err
-		return
+		if len(rsps) == 0 {
+			err = _err
+			return
+		}
+		lumina.GetLogger(ctx).Printf("partial error during request, we'll ignore it!")
 	}
 
 	switch rsps[0].(type) {
