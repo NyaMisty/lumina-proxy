@@ -52,6 +52,8 @@ func (*proxyHandler) AcceptRequest(t lumina.PacketType) bool {
 		return true
 	case lumina.PKT_DECOMPILE:
 		return true
+	case lumina.PKT_GET_FUNC_HISTORIES:
+		return true
 	default:
 		return false
 	}
@@ -71,6 +73,12 @@ func (*proxyHandler) GetPacketOfType(t lumina.PacketType) lumina.Packet {
 		return &lumina.DecompilePacket{}
 	case lumina.PKT_DECOMPILE_RESULT:
 		return &lumina.DecompileResultPacket{}
+	case lumina.PKT_GET_FUNC_HISTORIES:
+		return &lumina.GetFuncHistoriesPacket{}
+	case lumina.PKT_GET_FUNC_HISTORIES_RESULT:
+		return &lumina.GetFuncHistoriesResultPacket{}
+	case lumina.PKT_HELO_RESULT:
+		return &lumina.HeloResultPacket{}
 	default:
 		return nil
 	}
@@ -78,6 +86,9 @@ func (*proxyHandler) GetPacketOfType(t lumina.PacketType) lumina.Packet {
 
 // Pump between client and upstream server. (half-duplex)
 func (*proxyHandler) ServeRequest(ctx context.Context, req lumina.Request) (finalRsp lumina.Packet, err error) {
+	if pkt, ok := req.(*lumina.GetFuncHistoriesPacket); ok {
+		lumina.GetLogger(ctx).Printf("%#v", pkt)
+	}
 	if pkt, ok := req.(*lumina.PushMdPacket); ok {
 		pkt.AnonymizeFields(ctx)
 	}
@@ -88,6 +99,11 @@ func (*proxyHandler) ServeRequest(ctx context.Context, req lumina.Request) (fina
 			return
 		}
 		lumina.GetLogger(ctx).Printf("partial error during request, we'll ignore it!")
+	}
+	for _, rsp := range rsps {
+		if pkt, ok := rsp.(*lumina.GetFuncHistoriesResultPacket); ok {
+			lumina.GetLogger(ctx).Printf("%#v", pkt)
+		}
 	}
 
 	switch rsps[0].(type) {
